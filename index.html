@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun Deryaman! 🎂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Üst Yazı */
+        #instruction-text {
+            position: absolute;
+            top: 5%;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #d81b60;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite;
+            width: 100%;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Pasta Konteynırı */
+        #cake-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.8s ease;
+        }
+
+        /* CSS ile Çizilen Büyük ve Tatlı Pasta */
+        .cake {
+            position: relative;
+            width: 350px;
+            height: 150px;
+            background: #f48fb1;
+            border-radius: 20px 20px 5px 5px;
+            box-shadow: 0 10px 0 #f06292;
+            margin-top: 60px;
+        }
+
+        .cake::before {
+            content: "";
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 5px;
+        }
+
+        /* Mumlar Düzeni (25 Mum) */
+        .candle-grid {
+            display: grid;
+            grid-template-columns: repeat(13, 1fr); /* İki sıra halinde dizilim */
+            gap: 10px;
+            width: 320px;
+            position: absolute;
+            top: -50px;
+            left: 15px;
+        }
+
+        .candle {
+            width: 12px;
+            height: 50px;
+            background: linear-gradient(to bottom, #81d4fa, #29b6f6);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .candle:hover { transform: scale(1.2); }
+
+        .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 20px;
+            background: #ffeb3b;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px #ff9800;
+            animation: flicker 0.6s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from { transform: translateX(-50%) scale(1); opacity: 0.9; }
+            to { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+        }
+
+        .candle.off .flame { display: none; }
+        .candle.off { background: #cfd8dc !important; opacity: 0.7; }
+
+        /* Sürpriz Ekranı */
+        #surprise-section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: zoomIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .photo-wrapper {
+            position: relative;
+            width: 350px;
+        }
+
+        .photo-wrapper img {
+            width: 100%;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+        }
+
+        /* Hareketli Huni ve Düdük */
+        .hat {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 90px;
+            animation: hatMove 2s infinite ease-in-out;
+            z-index: 5;
+        }
+
+        .blower {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 60px;
+            animation: blowMove 1.5s infinite ease-in-out;
+        }
+
+        @keyframes hatMove {
+            0%, 100% { transform: translateX(-50%) rotate(-10deg) translateY(0); }
+            50% { transform: translateX(-50%) rotate(10deg) translateY(-15px); }
+        }
+
+        @keyframes blowMove {
+            0%, 100% { transform: scale(1) rotate(0); }
+            50% { transform: scale(1.2) rotate(15deg); }
+        }
+
+        /* Büyük Başlık */
+        .big-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 4rem;
+            color: #ad1457;
+            margin-top: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .sub-text { font-size: 1.5rem; color: #880e4f; }
+
+    </style>
+</head>
+<body>
+
+    <h1 id="instruction-text">Hadi üfle! (Tıkla) ✨</h1>
+
+    <div id="cake-section">
+        <div class="cake">
+            <div class="candle-grid" id="candle-grid">
+                </div>
+        </div>
+    </div>
+
+    <div id="surprise-section">
+        <div class="photo-wrapper">
+            <div class="hat">🥳</div>
+            <img src="sevgili.png" alt="Deryaman">
+            <div class="blower">🎉</div>
+        </div>
+        <div class="big-text">İyi ki Doğdun Deryaman!</div>
+        <p class="sub-text">Gülüşün hiç eksik olmasın... ❤️</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        const grid = document.getElementById('candle-grid');
+        let blownOut = 0;
+        const total = 25;
+
+        // 25 Mumu Oluşturma
+        for (let i = 0; i < total; i++) {
+            const c = document.createElement('div');
+            c.className = 'candle';
+            c.innerHTML = '<div class="flame"></div>';
+            c.onclick = function() {
+                if (!this.classList.contains('off')) {
+                    this.classList.add('off');
+                    blownOut++;
+                    if (blownOut === total) reveal();
+                }
+            };
+            grid.appendChild(c);
+        }
+
+        function reveal() {
+            document.getElementById('instruction-text').style.display = 'none';
+            document.getElementById('cake-section').style.display = 'none';
+            document.getElementById('surprise-section').style.display = 'flex';
+
+            // Tüm Sayfada Konfeti Patlatma
+            var end = Date.now() + (5 * 1000); // 5 saniye sürsün
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#f48fb1', '#ce93d8', '#81d4fa']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#f48fb1', '#ce93d8', '#81d4fa']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+</html>
