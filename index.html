@@ -13,46 +13,69 @@
             background: linear-gradient(135deg, #fff1eb 0%, #ffd1ff 100%);
             font-family: 'Montserrat', sans-serif;
             text-align: center;
+            overflow: hidden;
         }
         #instruction-text {
             position: absolute; top: 40px; width: 100%;
-            font-family: 'Dancing Script', cursive; font-size: 3rem; color: #d81b60;
+            font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #d81b60;
+            z-index: 10; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
-        #cake-section { position: relative; display: flex; flex-direction: column; align-items: center; }
-        .cake-main {
-            width: 300px; height: 140px; background: #ff80ab;
-            border-radius: 20px 20px 5px 5px; box-shadow: 0 10px 0 #f06292;
-            position: relative;
+        /* YENİ EMOJİ PASTA ALANI */
+        #cake-section {
+            position: relative; display: flex; flex-direction: column; align-items: center;
+            margin-top: 50px;
         }
-        .candle-grid {
-            position: absolute; top: -120px; width: 240px;
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+        .emoji-cake {
+            font-size: 180px; /* Kocaman bir pasta emojisi */
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            z-index: 1;
         }
-        .candle { width: 12px; height: 50px; background: #81d4fa; border-radius: 4px; cursor: pointer; position: relative; }
-        .flame {
-            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
-            width: 12px; height: 20px; background: #ffeb3b; border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 15px #ff9800; animation: flicker 0.5s infinite alternate;
+        .emoji-candles {
+            position: absolute;
+            top: -40px; /* Pastanın üstüne konumlandırma */
+            display: flex;
+            gap: 15px;
+            z-index: 2;
         }
-        @keyframes flicker { from { opacity: 0.8; } to { opacity: 1; } }
-        .candle.off .flame { display: none; }
-        .candle.off { background: #cfd8dc !important; opacity: 0.5; }
-        #surprise-section { display: none; flex-direction: column; align-items: center; }
+        .candle {
+            font-size: 60px; /* Büyük mum emojileri */
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
+        }
+        .candle:hover { transform: scale(1.1); }
+        .candle.blown {
+            opacity: 0; /* Sönünce (tıklanınca) kaybolsun */
+            pointer-events: none; /* Tekrar tıklanamasın */
+        }
+
+        /* Sürpriz Ekranı (Aynı kalıyor, sadece fontlar iyileştirildi) */
+        #surprise-section { display: none; flex-direction: column; align-items: center; animation: popIn 0.8s ease-out forwards; }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .photo-box { position: relative; width: 320px; margin-bottom: 20px; }
         .photo-box img { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .hat-overlay { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); font-size: 100px; z-index: 10; animation: bounce 2s infinite; }
         .blower-overlay { position: absolute; bottom: 10px; right: -20px; font-size: 70px; z-index: 10; animation: shake 1.5s infinite; }
         @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } }
         @keyframes shake { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(15deg); } }
-        .main-title { font-size: 4rem; color: #ad1457; margin: 0; text-transform: uppercase; }
-        .sub-text { font-family: 'Dancing Script', cursive; font-size: 2rem; color: #880e4f; margin: 0; }
+        .main-title { font-size: 4.5rem; color: #ad1457; margin: 0; text-transform: uppercase; letter-spacing: -2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .sub-text { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #880e4f; margin: 0; }
     </style>
 </head>
 <body>
     <h1 id="instruction-text">Hadi üfle Deryaman! ✨</h1>
+    
     <div id="cake-section">
-        <div class="cake-main"><div class="candle-grid" id="candle-grid"></div></div>
+        <div class="emoji-candles">
+            <span class="candle" onclick="blowCandle(this)">🕯️</span>
+            <span class="candle" onclick="blowCandle(this)">🕯️</span>
+            <span class="candle" onclick="blowCandle(this)">🕯️</span>
+            <span class="candle" onclick="blowCandle(this)">🕯️</span>
+            <span class="candle" onclick="blowCandle(this)">🕯️</span>
+        </div>
+        <div class="emoji-cake">🎂</div>
     </div>
+
     <div id="surprise-section">
         <div class="photo-box">
             <div class="hat-overlay">🥳</div>
@@ -64,22 +87,20 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
-        const grid = document.getElementById('candle-grid');
         let blownOut = 0;
-        const total = 25;
-        for (let i = 0; i < total; i++) {
-            const c = document.createElement('div');
-            c.className = 'candle';
-            c.innerHTML = '<div class="flame"></div>';
-            c.onclick = function() {
-                if (!this.classList.contains('off')) {
-                    this.classList.add('off');
-                    blownOut++;
-                    if (blownOut === total) reveal();
+        const total = 5; // Sadece 5 mum var
+
+        // Muma tıklanınca çalışacak fonksiyon
+        function blowCandle(element) {
+            if (!element.classList.contains('blown')) {
+                element.classList.add('blown'); // Mumu "sönmüş" yap (gizle)
+                blownOut++;
+                if (blownOut === total) {
+                    setTimeout(reveal, 500); // 5'i de sönünce sürprizi aç
                 }
-            };
-            grid.appendChild(c);
+            }
         }
+
         function reveal() {
             document.getElementById('cake-section').style.display = 'none';
             document.getElementById('instruction-text').style.display = 'none';
