@@ -4,111 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İyi ki Doğdun Deryaman! 🎂</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0; padding: 0;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #fff1eb 0%, #ffd1ff 100%);
+            background: #fff5f7; /* Çok soft bir krem/pembe */
             font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            overflow: hidden;
-        }
-        #instruction-text {
-            position: absolute; top: 40px; width: 100%;
-            font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #d81b60;
-            z-index: 10; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        /* YENİ EMOJİ PASTA ALANI */
-        #cake-section {
-            position: relative; display: flex; flex-direction: column; align-items: center;
-            margin-top: 50px;
-        }
-        .emoji-cake {
-            font-size: 180px; /* Kocaman bir pasta emojisi */
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-            z-index: 1;
-        }
-        .emoji-candles {
-            position: absolute;
-            top: -40px; /* Pastanın üstüne konumlandırma */
-            display: flex;
-            gap: 15px;
-            z-index: 2;
-        }
-        .candle {
-            font-size: 60px; /* Büyük mum emojileri */
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
-        }
-        .candle:hover { transform: scale(1.1); }
-        .candle.blown {
-            opacity: 0; /* Sönünce (tıklanınca) kaybolsun */
-            pointer-events: none; /* Tekrar tıklanamasın */
+            overflow: hidden; text-align: center;
         }
 
-        /* Sürpriz Ekranı (Aynı kalıyor, sadece fontlar iyileştirildi) */
-        #surprise-section { display: none; flex-direction: column; align-items: center; animation: popIn 0.8s ease-out forwards; }
-        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .photo-box { position: relative; width: 320px; margin-bottom: 20px; }
-        .photo-box img { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-        .hat-overlay { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); font-size: 100px; z-index: 10; animation: bounce 2s infinite; }
-        .blower-overlay { position: absolute; bottom: 10px; right: -20px; font-size: 70px; z-index: 10; animation: shake 1.5s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } }
-        @keyframes shake { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(15deg); } }
-        .main-title { font-size: 4.5rem; color: #ad1457; margin: 0; text-transform: uppercase; letter-spacing: -2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-        .sub-text { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #880e4f; margin: 0; }
+        #instruction-text {
+            position: absolute; top: 10%; width: 100%;
+            font-family: 'Playfair Display', serif; font-size: 3rem;
+            font-style: italic; color: #ad1457;
+            animation: fadeIn 2s;
+        }
+
+        /* PASTA ALANI - Profesyonel İllüstrasyon Stili */
+        #cake-container {
+            position: relative; cursor: default;
+            animation: slideUp 1s ease-out;
+        }
+
+        /* SVG Pasta Çizimi (Hazır Vektör) */
+        .svg-cake { width: 350px; height: auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.1)); }
+
+        /* MUMLAR - İnteraktif 5 Adet */
+        .candle-wrapper {
+            position: absolute; top: 10px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; gap: 15px; z-index: 10;
+        }
+        .candle {
+            font-size: 50px; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
+        }
+        .candle:hover { transform: scale(1.2) translateY(-5px); }
+        .candle.blown { opacity: 0; transform: scale(0); pointer-events: none; }
+
+        /* SÜRPRİZ EKRANI */
+        #surprise-section {
+            display: none; flex-direction: column; align-items: center;
+            animation: celebrate 0.8s forwards;
+        }
+
+        .photo-frame {
+            position: relative; width: 320px;
+            margin-bottom: 25px;
+        }
+        .photo-frame img {
+            width: 100%; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            border: 8px solid white;
+        }
+
+        /* Aksesuarlar */
+        .hat { position: absolute; top: -65px; left: 50%; transform: translateX(-50%); font-size: 90px; z-index: 5; animation: bounce 2s infinite; }
+        .party-pop { position: absolute; bottom: 0; right: -30px; font-size: 70px; animation: rotate 1.5s infinite; }
+
+        /* YAZILAR */
+        .title-main {
+            font-size: 4.5rem; color: #ad1457; margin: 0;
+            letter-spacing: -3px; line-height: 1;
+        }
+        .subtitle {
+            font-family: 'Playfair Display', serif; font-size: 1.8rem;
+            color: #d81b60; margin-top: 10px; font-style: italic;
+        }
+
+        /* Animasyonlar */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes celebrate { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-20px); } }
+        @keyframes rotate { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(20deg); } }
+
     </style>
 </head>
 <body>
-    <h1 id="instruction-text">Hadi üfle Deryaman! ✨</h1>
-    
-    <div id="cake-section">
-        <div class="emoji-candles">
-            <span class="candle" onclick="blowCandle(this)">🕯️</span>
-            <span class="candle" onclick="blowCandle(this)">🕯️</span>
-            <span class="candle" onclick="blowCandle(this)">🕯️</span>
-            <span class="candle" onclick="blowCandle(this)">🕯️</span>
-            <span class="candle" onclick="blowCandle(this)">🕯️</span>
+
+    <h1 id="instruction-text">Dileğini tut ve mumları söndür... ✨</h1>
+
+    <div id="cake-container">
+        <div class="candle-wrapper">
+            <span class="candle" onclick="blow(this)">🕯️</span>
+            <span class="candle" onclick="blow(this)">🕯️</span>
+            <span class="candle" onclick="blow(this)">🕯️</span>
+            <span class="candle" onclick="blow(this)">🕯️</span>
+            <span class="candle" onclick="blow(this)">🕯️</span>
         </div>
-        <div class="emoji-cake">🎂</div>
+        <svg class="svg-cake" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#F48FB1" d="M433.2 240H78.8c-11 0-20 9-20 20v140c0 11 9 20 20 20h354.4c11 0 20-9 20-20V260c0-11-9-20-20-20z"/><path fill="#FCE4EC" d="M380 160H132c-11 0-20 9-20 20v60h288v-60c0-11-9-20-20-20z"/><path fill="#F06292" d="M58.8 380h394.4v20c0 11-9 20-20 20H78.8c-11 0-20-9-20-20v-20z"/><circle fill="#FFF" cx="132" cy="240" r="10"/><circle fill="#FFF" cx="192" cy="240" r="10"/><circle fill="#FFF" cx="256" cy="240" r="10"/><circle fill="#FFF" cx="320" cy="240" r="10"/><circle fill="#FFF" cx="380" cy="240" r="10"/></svg>
     </div>
 
     <div id="surprise-section">
-        <div class="photo-box">
-            <div class="hat-overlay">🥳</div>
+        <div class="photo-frame">
+            <div class="hat">🥳</div>
             <img src="sevgili.png" alt="Deryaman">
-            <div class="blower-overlay">🎉</div>
+            <div class="party-pop">🎉</div>
         </div>
-        <h2 class="main-title">DERYAMAN</h2>
-        <p class="sub-text">İyi ki Doğdun... ❤️</p>
+        <h2 class="title-main">DERYAMAN</h2>
+        <p class="subtitle">İyi ki doğdun, iyi ki varsın... ❤️</p>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
-        let blownOut = 0;
-        const total = 5; // Sadece 5 mum var
-
-        // Muma tıklanınca çalışacak fonksiyon
-        function blowCandle(element) {
-            if (!element.classList.contains('blown')) {
-                element.classList.add('blown'); // Mumu "sönmüş" yap (gizle)
-                blownOut++;
-                if (blownOut === total) {
-                    setTimeout(reveal, 500); // 5'i de sönünce sürprizi aç
+        let count = 0;
+        function blow(el) {
+            if (!el.classList.contains('blown')) {
+                el.classList.add('blown');
+                count++;
+                if (count === 5) {
+                    setTimeout(() => {
+                        document.getElementById('cake-container').style.display = 'none';
+                        document.getElementById('instruction-text').style.display = 'none';
+                        document.getElementById('surprise-section').style.display = 'flex';
+                        launchConfetti();
+                    }, 600);
                 }
             }
         }
 
-        function reveal() {
-            document.getElementById('cake-section').style.display = 'none';
-            document.getElementById('instruction-text').style.display = 'none';
-            document.getElementById('surprise-section').style.display = 'flex';
-            var end = Date.now() + 5000;
+        function launchConfetti() {
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
             (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ad1457', '#f48fb1'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ad1457', '#f48fb1'] });
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
