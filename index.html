@@ -4,89 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İyi ki Doğdun Deryaman! 🎂</title>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
-        /* ... (Sayfa Genel Ayarları, Pasta ve Mum stilleri aynı kalıyor) ... */
-
-        /* YENİ SÜRPRİZ EKRANI - Emojiler Fotoğrafla Bütünleşiyor */
-        #surprise-section {
-            /* ... (Genel stiller aynı) ... */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff1eb 0%, #ffd1ff 100%);
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            text-align: center;
         }
 
-        /* FOTOĞRAF VE EMOJİ KOMPOZİSYONU */
+        /* Üst Talimat Yazısı */
+        #instruction-text {
+            position: absolute;
+            top: 50px;
+            font-size: 2.2rem;
+            color: #d81b60;
+            font-weight: 700;
+            animation: softBounce 2s infinite ease-in-out;
+            width: 100%;
+        }
+
+        @keyframes softBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Pasta Tasarımı */
+        #cake-section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.8s;
+        }
+
+        .cake-base {
+            width: 320px;
+            height: 130px;
+            background: #f8bbd0;
+            border-radius: 20px 20px 10px 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .cake-base::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 80px;
+            background: #fce4ec;
+            border-radius: 15px 15px 5px 5px;
+            box-shadow: 0 5px 0 #f8bbd0;
+        }
+
+        /* 25 Mumun Yerleşimi */
+        .candle-container {
+            position: absolute;
+            top: -120px;
+            width: 260px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .candle {
+            width: 10px;
+            height: 45px;
+            background: linear-gradient(to bottom, #81d4fa, #29b6f6);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 20px;
+            background: #ffeb3b;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px #ff9800;
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from { transform: translateX(-50%) scale(1); }
+            to { transform: translateX(-50%) scale(1.1); }
+        }
+
+        .candle.off .flame { display: none; }
+        .candle.off { background: #cfd8dc !important; opacity: 0.5; }
+
+        /* Sürpriz Ekranı */
+        #surprise-section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: zoomIn 1s forwards;
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Fotoğraf ve Aksesuarlar */
         .photo-composition {
             position: relative;
-            width: 320px;
-            height: auto; /* Fotoğrafın yüksekliğine göre ayarlanır */
-            margin-bottom: 20px;
-            overflow: visible; /* Emojilerin dışarı taşmasına izin ver */
+            width: 300px;
+            margin-bottom: 30px;
         }
 
-        /* Fotoğrafın Kendisi */
         .photo-composition img {
             width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            transform: rotate(-2deg);
-            position: relative; /* Emojilerin arkasında kalması için */
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             z-index: 1;
         }
 
-        /* Hareketli Şapka - Fotoğrafın Kafasına Yerleşecek Şekilde Konumlandırıldı */
         .hat {
             position: absolute;
-            top: -50px; /* Fotoğrafın üst kısmına göre ayarlandı */
-            left: 45%; /* Kafanın hizasına göre ayarlandı */
-            transform: translateX(-50%) rotate(-10deg);
-            font-size: 90px;
-            animation: hatBob 2s infinite ease-in-out;
-            z-index: 2; /* Fotoğrafın önünde */
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
+            top: -65px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 100px;
+            z-index: 10;
+            animation: hatWiggle 2s infinite;
         }
 
-        /* Hareketli Düdük - Fotoğrafın Alt Köşesine Konumlandırıldı */
         .blower {
             position: absolute;
-            bottom: 5px;
-            right: -15px;
-            font-size: 60px;
-            animation: blowerWiggle 1.5s infinite ease-in-out;
-            z-index: 2; /* Fotoğrafın önünde */
+            bottom: 10px;
+            right: -30px;
+            font-size: 70px;
+            z-index: 10;
+            animation: blowerMove 1.5s infinite;
         }
 
-        @keyframes hatBob { /* ... (Animasyonlar aynı) ... */ }
-        @keyframes blowerWiggle { /* ... (Animasyonlar aynı) ... */ }
-
-        /* YENİ BÜYÜK BAŞLIK FONTU - Parisienne */
-        .big-text {
-            font-family: 'Parisienne', cursive; /* Zarif ve şık el yazısı */
-            font-size: 5rem; /* Daha büyük ve gösterişli */
-            color: #c2185b; /* Daha koyu ve zengin bir pembe */
-            line-height: 1.2;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
+        @keyframes hatWiggle {
+            0%, 100% { transform: translateX(-50%) rotate(-10deg); }
+            50% { transform: translateX(-50%) rotate(10deg) translateY(-10px); }
         }
-        /* Alt Metin Fontu - Quicksand */
+
+        @keyframes blowerMove {
+            0%, 100% { transform: scale(1) rotate(0); }
+            50% { transform: scale(1.2) rotate(15deg); }
+        }
+
+        /* Yazı Fontları */
+        .celebration-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: #ad1457;
+            margin: 0;
+        }
+
+        .name-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 3.5rem;
+            color: #c2185b;
+            letter-spacing: 2px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
         .sub-text {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: #880e4f;
-            margin-top: 10px;
+            margin-top: 15px;
         }
-
-    </style>
-</head>
-<body>
-
-    <div id="surprise-section">
-        <div class="photo-composition">
-            <div class="hat">🥳</div>
-            <img src="sevgili.png" alt="Deryaman" onerror="this.onerror=null; this.src='https://via.placeholder.com/320x400?text=Fotoğraf+Yüklenemedi'; alert('Fotoğraf yüklenemedi! Dosya adını kontrol et: sevgili.png')">
-            <div class="blower">🎉</div>
-        </div>
-        <div class="big-text">İyi ki Doğdun<br>Deryaman!</div>
-        <p class="sub-text">Gülüşün hiç eksik olmasın... ❤️</p>
-    </div>
-
-    </body>
-</html>
