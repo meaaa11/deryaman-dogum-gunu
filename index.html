@@ -4,185 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İyi ki Doğdun Deryaman! 🎂</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
             background: linear-gradient(135deg, #fff1eb 0%, #ffd1ff 100%);
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
             text-align: center;
         }
-
-        /* Üst Talimat Yazısı */
         #instruction-text {
-            position: absolute;
-            top: 50px;
-            font-size: 2.2rem;
-            color: #d81b60;
-            font-weight: 700;
-            animation: softBounce 2s infinite ease-in-out;
-            width: 100%;
+            position: absolute; top: 40px; width: 100%;
+            font-family: 'Dancing Script', cursive; font-size: 3rem; color: #d81b60;
         }
-
-        @keyframes softBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Pasta Tasarımı */
-        #cake-section {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: opacity 0.8s;
-        }
-
-        .cake-base {
-            width: 320px;
-            height: 130px;
-            background: #f8bbd0;
-            border-radius: 20px 20px 10px 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        #cake-section { position: relative; display: flex; flex-direction: column; align-items: center; }
+        .cake-main {
+            width: 300px; height: 140px; background: #ff80ab;
+            border-radius: 20px 20px 5px 5px; box-shadow: 0 10px 0 #f06292;
             position: relative;
         }
-
-        .cake-base::before {
-            content: '';
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 220px;
-            height: 80px;
-            background: #fce4ec;
-            border-radius: 15px 15px 5px 5px;
-            box-shadow: 0 5px 0 #f8bbd0;
+        .candle-grid {
+            position: absolute; top: -120px; width: 240px;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
         }
-
-        /* 25 Mumun Yerleşimi */
-        .candle-container {
-            position: absolute;
-            top: -120px;
-            width: 260px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .candle {
-            width: 10px;
-            height: 45px;
-            background: linear-gradient(to bottom, #81d4fa, #29b6f6);
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-        }
-
+        .candle { width: 12px; height: 50px; background: #81d4fa; border-radius: 4px; cursor: pointer; position: relative; }
         .flame {
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 20px;
-            background: #ffeb3b;
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 15px #ff9800;
-            animation: flicker 0.5s infinite alternate;
+            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            width: 12px; height: 20px; background: #ffeb3b; border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px #ff9800; animation: flicker 0.5s infinite alternate;
         }
-
-        @keyframes flicker {
-            from { transform: translateX(-50%) scale(1); }
-            to { transform: translateX(-50%) scale(1.1); }
-        }
-
+        @keyframes flicker { from { opacity: 0.8; } to { opacity: 1; } }
         .candle.off .flame { display: none; }
         .candle.off { background: #cfd8dc !important; opacity: 0.5; }
-
-        /* Sürpriz Ekranı */
-        #surprise-section {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            animation: zoomIn 1s forwards;
+        #surprise-section { display: none; flex-direction: column; align-items: center; }
+        .photo-box { position: relative; width: 320px; margin-bottom: 20px; }
+        .photo-box img { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .hat-overlay { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); font-size: 100px; z-index: 10; animation: bounce 2s infinite; }
+        .blower-overlay { position: absolute; bottom: 10px; right: -20px; font-size: 70px; z-index: 10; animation: shake 1.5s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } }
+        @keyframes shake { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(15deg); } }
+        .main-title { font-size: 4rem; color: #ad1457; margin: 0; text-transform: uppercase; }
+        .sub-text { font-family: 'Dancing Script', cursive; font-size: 2rem; color: #880e4f; margin: 0; }
+    </style>
+</head>
+<body>
+    <h1 id="instruction-text">Hadi üfle Deryaman! ✨</h1>
+    <div id="cake-section">
+        <div class="cake-main"><div class="candle-grid" id="candle-grid"></div></div>
+    </div>
+    <div id="surprise-section">
+        <div class="photo-box">
+            <div class="hat-overlay">🥳</div>
+            <img src="sevgili.png" alt="Deryaman">
+            <div class="blower-overlay">🎉</div>
+        </div>
+        <h2 class="main-title">DERYAMAN</h2>
+        <p class="sub-text">İyi ki Doğdun... ❤️</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const grid = document.getElementById('candle-grid');
+        let blownOut = 0;
+        const total = 25;
+        for (let i = 0; i < total; i++) {
+            const c = document.createElement('div');
+            c.className = 'candle';
+            c.innerHTML = '<div class="flame"></div>';
+            c.onclick = function() {
+                if (!this.classList.contains('off')) {
+                    this.classList.add('off');
+                    blownOut++;
+                    if (blownOut === total) reveal();
+                }
+            };
+            grid.appendChild(c);
         }
-
-        @keyframes zoomIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        function reveal() {
+            document.getElementById('cake-section').style.display = 'none';
+            document.getElementById('instruction-text').style.display = 'none';
+            document.getElementById('surprise-section').style.display = 'flex';
+            var end = Date.now() + 5000;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
         }
-
-        /* Fotoğraf ve Aksesuarlar */
-        .photo-composition {
-            position: relative;
-            width: 300px;
-            margin-bottom: 30px;
-        }
-
-        .photo-composition img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .hat {
-            position: absolute;
-            top: -65px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 100px;
-            z-index: 10;
-            animation: hatWiggle 2s infinite;
-        }
-
-        .blower {
-            position: absolute;
-            bottom: 10px;
-            right: -30px;
-            font-size: 70px;
-            z-index: 10;
-            animation: blowerMove 1.5s infinite;
-        }
-
-        @keyframes hatWiggle {
-            0%, 100% { transform: translateX(-50%) rotate(-10deg); }
-            50% { transform: translateX(-50%) rotate(10deg) translateY(-10px); }
-        }
-
-        @keyframes blowerMove {
-            0%, 100% { transform: scale(1) rotate(0); }
-            50% { transform: scale(1.2) rotate(15deg); }
-        }
-
-        /* Yazı Fontları */
-        .celebration-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4.5rem;
-            color: #ad1457;
-            margin: 0;
-        }
-
-        .name-title {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 3.5rem;
-            color: #c2185b;
-            letter-spacing: 2px;
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        .sub-text {
-            font-size: 1.4rem;
-            color: #880e4f;
-            margin-top: 15px;
-        }
+    </script>
+</body>
+</html>
